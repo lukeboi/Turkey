@@ -16,6 +16,7 @@ var digits = ".1234567890¹²³⁴⁵⁶⁷⁸⁹⁰"
 var pConsole = $("#output");
 var running = true;
 var codeIndex = 0;
+var iterations = 0;
 
 //program specific
 var stack = [];
@@ -33,9 +34,10 @@ $("#run").click(function() {
   //clean console from last run
   pConsole.empty();
 
-  alert(strip(prog, 2).length);
+  alert(strip(prog, 2));
 
   while(running) {
+    pConsole.append(prog + nl);
     var currentChar = prog.charAt(0);
     if(commandAssociationsChars.indexOf(currentChar) != -1) { //if the char is an associative command
       evaluate(commandAssociations[commandAssociationsChars.indexOf(currentChar)])();
@@ -44,16 +46,24 @@ $("#run").click(function() {
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
       stack.push(currentChar);
       prog = strip(prog, 1);
+      alert(prog);
     }
     else if (currentChar == "'") { //if the char is a char char
       stack.push(currentChar);
       prog = strip(prog, 2);
     }
-
-    if (prog.length <= 0) {
+    else if (commands.indexOf(currentChar) != -1) { //if the command is in the commands
+      evaluate(currentChar);
+      prog = strip(prog, 1);
+    }
+    else {
+      prog = strip(prog, 1);
+    }
+    if (prog.length <= 0 || iterations >= 100) {
       running = false;
     }
-    alert("Running;" + currentChar);
+    iterations++;
+
   }
 
   pConsole.append(nl + "Stack:" + stack);
@@ -91,7 +101,8 @@ function T() {
 }
 
 function F() {
-  pConsole.append(StackPop() + nl);
+  alert("foo");
+  pConsole.append(StackPop());
 }
 
 function a() {
