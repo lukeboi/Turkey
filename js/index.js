@@ -27,30 +27,33 @@ var pZ = -1;
 //run
 $("#run").click(function() {
   //variables
-  stack = []; 
+  stack = [];
   var prog = $("#code").val();
-  
+
   //clean console from last run
   pConsole.empty();
-  
+
+  alert(strip(prog, 2).length);
+
   while(running) {
     var currentChar = prog.charAt(0);
     if(commandAssociationsChars.indexOf(currentChar) != -1) { //if the char is an associative command
       evaluate(commandAssociations[commandAssociationsChars.indexOf(currentChar)])();
-      prog = strip(prog);
+      prog = strip(prog, 1);
     }
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
       stack.push(currentChar);
-      prog = strip(prog);
+      prog = strip(prog, 1);
     }
     else if (currentChar == "'") { //if the char is a char char
       stack.push(currentChar);
       prog = strip(prog, 2);
     }
-    
-    if (prog.length == 0) {
+
+    if (prog.length <= 0) {
       running = false;
     }
+    alert("Running;" + currentChar);
   }
 
   pConsole.append(nl + "Stack:" + stack);
@@ -74,7 +77,7 @@ function isPrime(j) {
   return p;
 }
 
-function strip(s, l = 1) {
+function strip(s, l) {
   return s.substring(l);
 }
 
