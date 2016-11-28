@@ -34,10 +34,8 @@ $("#run").click(function() {
   //clean console from last run
   pConsole.empty();
 
-  alert(strip(prog, 2));
 
   while(running) {
-    pConsole.append(prog + nl);
     var currentChar = prog.charAt(0);
     if(commandAssociationsChars.indexOf(currentChar) != -1) { //if the char is an associative command
       evaluate(commandAssociations[commandAssociationsChars.indexOf(currentChar)])();
@@ -46,7 +44,6 @@ $("#run").click(function() {
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
       stack.push(currentChar);
       prog = strip(prog, 1);
-      alert(prog);
     }
     else if (currentChar == "'") { //if the char is a char char
       stack.push(currentChar);
@@ -63,7 +60,6 @@ $("#run").click(function() {
       running = false;
     }
     iterations++;
-
   }
 
   pConsole.append(nl + "Stack:" + stack);
@@ -101,8 +97,8 @@ function T() {
 }
 
 function F() {
-  alert("foo");
-  pConsole.append(StackPop());
+  var v = StackPop();
+  pConsole.append(v);
 }
 
 function a() {
@@ -110,7 +106,6 @@ function a() {
 }
 
 function p() {
-  alert("foo");
   if (isPrime(StackPop())) {
     stack.push(1);
   }
