@@ -1,7 +1,11 @@
 * {
   font-family: Courier;
 }
-.button{
+.button {
   width: 45px;
   background-color: grey;
+  margin: 5px;
+}
+#output {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
