@@ -30,7 +30,7 @@ $("#run").click(function() {
   //variables
   stack = [];
   var prog = $("#code").val();
-
+  running = true;
   //clean console from last run
   pConsole.empty();
 
@@ -46,7 +46,7 @@ $("#run").click(function() {
       prog = strip(prog, 1);
     }
     else if (currentChar == "'") { //if the char is a char char
-      stack.push(currentChar);
+      stack.push(prog.charAt(1));
       prog = strip(prog, 2);
     }
     else if (commands.indexOf(currentChar) != -1) { //if the command is in the commands
@@ -62,7 +62,7 @@ $("#run").click(function() {
     iterations++;
   }
 
-  pConsole.append(nl + "Stack:" + stack);
+  pConsole.append("Stack:" + stack);
 });
 
 // various functions
@@ -98,7 +98,9 @@ function T() {
 
 function F() {
   var v = StackPop();
-  pConsole.append(v);
+  console.log(v);
+  pConsole.append(v + nl);
+  alert(pConsole.html());
 }
 
 function a() {
