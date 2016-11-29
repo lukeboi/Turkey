@@ -1,11 +1,27 @@
 * {
-  font-family: Courier;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-size: 18px;
 }
 .button {
   width: 45px;
   background-color: grey;
   margin: 5px;
 }
-#output {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+#text {
+  width: 100%;
+  border: 1px solid black;
+}
+textarea {
+  display: block;
+  margin: auto;
+  width: 90%;
+  height: 100px;
+}
+
+/*theme specific*/
+body {
+  background-color: #455A64;
+}
+textarea {
+  background-color: #263238;
 }
