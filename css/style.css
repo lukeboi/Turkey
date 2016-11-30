@@ -27,6 +27,7 @@ body {
 textarea, #output {
   background-color: #263238;
   border-color: #263238;
+  color: #B0BEC5;
 }
 .button {
   background-color: #263238;

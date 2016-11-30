@@ -39,7 +39,7 @@ $("#run").click(function() {
   while(running) {
     var currentChar = prog.charAt(0);
     if(commandAssociationsChars.indexOf(currentChar) != -1) { //if the char is an associative command
-      evaluate(commandAssociations[commandAssociationsChars.indexOf(currentChar)])();
+      evaluateCode(commandAssociations[commandAssociationsChars.indexOf(currentChar)]);
       prog = strip(prog, 1);
     }
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
@@ -58,7 +58,7 @@ $("#run").click(function() {
       prog = strip(prog, 2);
     }
     else if (commands.indexOf(currentChar) != -1) { //if the command is in the commands
-      evaluate(currentChar);
+      evaluateCode(currentChar);
       prog = strip(prog, 1);
     }
     else {
@@ -95,18 +95,21 @@ function strip(s, l) {
   return s.substring(l);
 }
 
-function evaluate(c) {
+function evaluateCode(c) {
   window[c]();
 }
 
 // commands
+function add() {
+  stack.push(StackPop() + StackPop());
+}
+
 function T() {
   stack.push(10);
 }
 
-function F() {
+function comma() {
   var v = StackPop();
-  console.log(v);
   pConsole.append(v + nl);
 }
 
