@@ -27,10 +27,11 @@ var pZ = -1;
 
 //run
 $("#run").click(function() {
-  //variables
+  //reset variables
   stack = [];
   var prog = $("#code").val();
   running = true;
+
   //clean console from last run
   pConsole.empty();
 
@@ -42,8 +43,15 @@ $("#run").click(function() {
       prog = strip(prog, 1);
     }
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
-      stack.push(currentChar);
-      prog = strip(prog, 1);
+      var num = currentChar;
+      var n = 1;
+      while (digits.indexOf(prog.charAt(n)) != -1) {
+        num = num + String(prog.charAt(n));
+        n++;
+        if (n > 15) {break;}
+      }
+      prog = strip(prog, num.length);
+      stack.push(num);
     }
     else if (currentChar == "'") { //if the char is a char char
       stack.push(prog.charAt(1));
@@ -100,7 +108,6 @@ function F() {
   var v = StackPop();
   console.log(v);
   pConsole.append(v + nl);
-  alert(pConsole.html());
 }
 
 function a() {
