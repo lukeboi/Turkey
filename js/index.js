@@ -10,7 +10,9 @@ var nl = "<br>";
 var commandAssociationsChars = [","    ,"."     ,"+"  ];
 var commandAssociations      = ["comma","period","add"]
 var commands = ["T", "F", "a", "X", "Y", "Z", "x", "y", "z", "p"] + commandAssociationsChars;
-var digits = ".1234567890¹²³⁴⁵⁶⁷⁸⁹⁰"
+var digits = ".1234567890¹²³⁴⁵⁶⁷⁸⁹⁰";
+var digitsSets = [".1234567890", ".¹²³⁴⁵⁶⁷⁸⁹⁰"];
+var superDigits = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
 //other
 var pConsole = $("#output");
@@ -29,7 +31,7 @@ var pZ = -1;
 $("#run").click(function() {
   //reset variables
   stack = [];
-  var prog = $("#code").val();
+  prog = $("#code").val();
   running = true;
 
   //clean console from last run
@@ -43,10 +45,14 @@ $("#run").click(function() {
       prog = strip(prog, 1);
     }
     else if (digits.indexOf(currentChar) != -1) { //if the char is a digit
-      var num = currentChar;
+      var digitSet = 0;
+      var num = removeSupers(currentChar);
       var n = 1;
-      while (digits.indexOf(prog.charAt(n)) != -1) {
-        num = num + String(prog.charAt(n));
+      if (digitsSets[1].indexOf(currentChar) != -1) {
+        digitSet = 1;
+      }
+      while (digitsSets[digitSet].indexOf(prog.charAt(n)) != -1) {
+        num = num + String(removeSupers(prog.charAt(n)));
         n++;
         if (n > 15) {break;}
       }
@@ -99,9 +105,27 @@ function evaluateCode(c) {
   window[c]();
 }
 
+function convertNum(n) {
+  if(!isNaN(parseFloat(n))) {
+    return parseFloat(n);
+  }
+  return n;
+}
+
+function removeSupers(n) {
+  alert (superDigits.indexOf(n));
+  if(superDigits.indexOf(n) != -1) {
+    return superDigits.indexOf(n);
+  }
+  return n;
+}
+
 // commands
 function add() {
-  stack.push(StackPop() + StackPop());
+  var a, b;
+  a = convertNum(StackPop());
+  b = convertNum(StackPop());
+  stack.push(b + a);
 }
 
 function T() {
